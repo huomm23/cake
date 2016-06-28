@@ -23,7 +23,7 @@ namespace Cake.NuGet
         private readonly ICakeEnvironment _environment;
         private readonly IProcessRunner _processRunner;
         private readonly INuGetToolResolver _toolResolver;
-        private readonly INuGetPackageContentResolver _contentResolver;
+        private readonly INuGetContentResolver _contentResolver;
         private readonly ICakeLog _log;
 
         private readonly ICakeConfiguration _config;
@@ -43,7 +43,7 @@ namespace Cake.NuGet
             ICakeEnvironment environment,
             IProcessRunner processRunner,
             INuGetToolResolver toolResolver,
-            INuGetPackageContentResolver contentResolver,
+            INuGetContentResolver contentResolver,
             ICakeLog log,
             ICakeConfiguration config)
         {
@@ -156,8 +156,15 @@ namespace Cake.NuGet
                 _log.Verbose(Verbosity.Diagnostic, "Output:\r\n{0}", output);
             }
 
-            // Return the files.
-            return _contentResolver.GetFiles(packagePath, type);
+            // Get the files.
+            var result = _contentResolver.GetFiles(packagePath, type);
+            if(result.Count == 0)
+            {
+                var framework = _environment.Runtime.TargetFramework;
+                _log.Warning("Could not find any assemblies compatible with {0}.", framework.FullName);
+            }
+
+            return result;
         }
 
         private FilePath GetNuGetPath()

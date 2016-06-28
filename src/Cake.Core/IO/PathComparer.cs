@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Cake.Core.Polyfill;
 
 namespace Cake.Core.IO
 {
@@ -18,7 +19,12 @@ namespace Cake.Core.IO
         /// The default path comparer.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
-        public static readonly PathComparer Default = new PathComparer(Machine.IsUnix());
+        public static readonly PathComparer Default;
+
+        static PathComparer()
+        {
+            Default = new PathComparer(EnvironmentHelper.IsUnix());
+        }
 
         /// <summary>
         /// Gets a value indicating whether comparison is case sensitive.

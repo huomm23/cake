@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Versioning;
 using Cake.Core.IO;
+using Cake.Core.Polyfill;
 
 namespace Cake.Core
 {
@@ -67,8 +68,13 @@ namespace Cake.Core
         {
             _platform = platform;
             _runtime = runtime;
-            _applicationRoot = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
+            // Get the application root.
+            var assembly = AssemblyHelper.GetExecutingAssembly();
+            var path = System.IO.Path.GetDirectoryName(assembly.Location);
+            _applicationRoot = new DirectoryPath(path);
+
+            // Get the working directory.
             WorkingDirectory = new DirectoryPath(System.IO.Directory.GetCurrentDirectory());
         }
 
@@ -81,25 +87,7 @@ namespace Cake.Core
         /// </returns>
         public DirectoryPath GetSpecialPath(SpecialPath path)
         {
-            switch (path)
-            {
-                case SpecialPath.ApplicationData:
-                    return new DirectoryPath(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-                case SpecialPath.CommonApplicationData:
-                    return new DirectoryPath(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
-                case SpecialPath.LocalApplicationData:
-                    return new DirectoryPath(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
-                case SpecialPath.ProgramFiles:
-                    return new DirectoryPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
-                case SpecialPath.ProgramFilesX86:
-                    return new DirectoryPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86));
-                case SpecialPath.Windows:
-                    return new DirectoryPath(Environment.GetFolderPath(Environment.SpecialFolder.Windows));
-                case SpecialPath.LocalTemp:
-                    return new DirectoryPath(System.IO.Path.GetTempPath());
-            }
-            const string format = "The special path '{0}' is not supported.";
-            throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, format, path));
+            return SpecialPathHelper.GetFolderPath(_platform, path);
         }
 
         /// <summary>
@@ -180,7 +168,6 @@ namespace Cake.Core
             {
                 throw new CakeException("Working directory can not be set to a relative path.");
             }
-
             System.IO.Directory.SetCurrentDirectory(path.FullPath);
         }
     }
