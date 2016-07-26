@@ -6,9 +6,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Xml;
+using Cake.Common.Polyfill;
 using Cake.Core;
 using Cake.Core.IO;
-using Cake.Common.Polyfill;
 
 #if !NETCORE
 using System.Xml.Xsl;

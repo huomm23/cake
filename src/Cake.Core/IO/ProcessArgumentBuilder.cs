@@ -118,11 +118,23 @@ namespace Cake.Core.IO
             return builder;
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// An enumerator that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator<IProcessArgument> IEnumerable<IProcessArgument>.GetEnumerator()
         {
             return _tokens.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator" /> that can be used to iterate through the collection.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable)_tokens).GetEnumerator();

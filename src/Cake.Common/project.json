@@ -1,9 +1,16 @@
 {
   "version": "1.0.0-*",
   "dependencies": {
-    "Cake.Core": { "target": "project" }
+    "Cake.Core": { "target": "project" },
+    "StyleCop.Analyzers": "1.0.0"
   },
-
+  "buildOptions": {
+    "xmlDoc": true,
+    "additionalArguments": [
+      "/ruleset:../Cake.ruleset",
+      "/additionalfile:../stylecop.json"
+    ]
+  },
   "frameworks": {
     "netstandard1.6": {
       "buildOptions": {

@@ -4,11 +4,11 @@
 
 #if NETCORE
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Scripting;
-using System.Collections.Generic;
-using Cake.Core.Diagnostics;
 
 namespace Cake.Scripting.XPlat
 {

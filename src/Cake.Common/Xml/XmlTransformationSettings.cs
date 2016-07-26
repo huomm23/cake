@@ -44,7 +44,7 @@ namespace Cake.Common.Xml
         public bool DoNotEscapeUriAttributes
         {
             get { return XmlWriterSettingsHelper.GetDoNotEscapeUriAttributes(XmlWriterSettings); }
-            set {  XmlWriterSettingsHelper.SetDoNotEscapeUriAttributes(XmlWriterSettings, value); }
+            set { XmlWriterSettingsHelper.SetDoNotEscapeUriAttributes(XmlWriterSettings, value); }
         }
 
         /// <summary>

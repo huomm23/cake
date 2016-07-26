@@ -19,7 +19,7 @@ namespace Cake.Core.Polyfill
     {
         public static class Windows
         {
-            public static Dictionary<SpecialPath, int> _lookup = new Dictionary<SpecialPath, int>
+            private static readonly Dictionary<SpecialPath, int> _lookup = new Dictionary<SpecialPath, int>
             {
                 { SpecialPath.ApplicationData, 0x001a },
                 { SpecialPath.CommonApplicationData, 0x0023 },

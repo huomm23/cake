@@ -35,6 +35,5 @@ namespace Cake.Core.Polyfill
             return Assembly.LoadFrom(path);
 #endif
         }
-
     }
 }

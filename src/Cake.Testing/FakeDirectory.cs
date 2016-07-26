@@ -44,6 +44,10 @@ namespace Cake.Testing
             get { return _path; }
         }
 
+        /// <summary>
+        /// Gets the path to the entry.
+        /// </summary>
+        /// <value>The path.</value>
         Path IFileSystemInfo.Path
         {
             get { return _path; }

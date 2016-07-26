@@ -158,7 +158,7 @@ namespace Cake.NuGet
 
             // Get the files.
             var result = _contentResolver.GetFiles(packagePath, type);
-            if(result.Count == 0)
+            if (result.Count == 0)
             {
                 var framework = _environment.Runtime.TargetFramework;
                 _log.Warning("Could not find any assemblies compatible with {0}.", framework.FullName);

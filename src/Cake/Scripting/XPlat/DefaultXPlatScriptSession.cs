@@ -3,11 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 #if NETCORE
+using System.Linq;
 using Cake.Core.Diagnostics;
 using Cake.Core.Scripting;
 using Cake.Scripting.Roslyn;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
-using System.Linq;
 
 namespace Cake.Scripting.XPlat
 {

@@ -3,8 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
-using Cake.Core;
 using System.Reflection;
+using Cake.Core;
 
 namespace Cake.Commands
 {

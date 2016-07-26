@@ -6,11 +6,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cake.Core.IO;
-using Cake.Core.Packaging;
+using System.Runtime.Versioning;
 using Cake.Core;
 using Cake.Core.Diagnostics;
-using System.Runtime.Versioning;
+using Cake.Core.IO;
+using Cake.Core.Packaging;
 
 namespace Cake.NuGet.V2
 {

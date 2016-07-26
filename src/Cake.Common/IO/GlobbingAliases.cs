@@ -52,7 +52,7 @@ namespace Cake.Common.IO
         /// Func&lt;IFileSystemInfo, bool&gt; exclude_node_modules =
         ///     fileSystemInfo => !fileSystemInfo.Path.FullPath.EndsWith(
         ///         "node_modules", StringComparison.OrdinalIgnoreCase);
-        /// 
+        ///
         /// var files = GetFiles("./**/Cake.*.dll", exclude_node_modules);
         /// foreach(var file in files)
         /// {
@@ -113,7 +113,7 @@ namespace Cake.Common.IO
         /// Func&lt;IFileSystemInfo, bool&gt; exclude_node_modules =
         ///     fileSystemInfo => !fileSystemInfo.Path.FullPath.EndsWith(
         ///         "node_modules", StringComparison.OrdinalIgnoreCase);
-        /// 
+        ///
         /// var directories = GetDirectories("./src/**/obj/*", exclude_node_modules);
         /// foreach(var directory in directories)
         /// {

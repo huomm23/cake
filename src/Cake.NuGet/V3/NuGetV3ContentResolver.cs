@@ -3,13 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 #if NETCORE
-using System.Collections.Generic;
-using Cake.Core.IO;
-using Cake.Core.Diagnostics;
-using NuGet.Frameworks;
-using Cake.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Cake.Core;
+using Cake.Core.Diagnostics;
+using Cake.Core.IO;
+using NuGet.Frameworks;
 
 namespace Cake.NuGet.V3
 {
@@ -20,8 +20,8 @@ namespace Cake.NuGet.V3
         private readonly ICakeLog _log;
 
         public NuGetV3ContentResolver(
-            IFileSystem fileSystem, 
-            ICakeEnvironment environment, 
+            IFileSystem fileSystem,
+            ICakeEnvironment environment,
             ICakeLog log) : base(fileSystem)
         {
             _fileSystem = fileSystem;

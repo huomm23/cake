@@ -7,10 +7,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if NETCORE
-using Cake.Core.IO;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Cake.Core.IO;
 
 namespace Cake.Core.Polyfill
 {

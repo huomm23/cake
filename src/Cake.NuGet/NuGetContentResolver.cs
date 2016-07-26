@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using Cake.Core.IO;
 using Cake.Core.Packaging;
-using System;
 
 namespace Cake.NuGet
 {
@@ -20,7 +20,7 @@ namespace Cake.NuGet
 
         public IReadOnlyCollection<IFile> GetFiles(DirectoryPath path, PackageType type)
         {
-            if(path == null)
+            if (path == null)
             {
                 throw new ArgumentNullException("path");
             }

@@ -33,6 +33,10 @@ namespace Cake.Testing
         /// <value>The application root path.</value>
         public DirectoryPath ApplicationRoot { get; set; }
 
+        /// <summary>
+        /// Gets the platform Cake is running on.
+        /// </summary>
+        /// <value>The platform Cake is running on.</value>
         ICakePlatform ICakeEnvironment.Platform
         {
             get { return _platform; }
@@ -47,6 +51,10 @@ namespace Cake.Testing
             get { return _platform; }
         }
 
+        /// <summary>
+        /// Gets the runtime Cake is running in.
+        /// </summary>
+        /// <value>The runtime Cake is running in.</value>
         ICakeRuntime ICakeEnvironment.Runtime
         {
             get { return _runtime; }

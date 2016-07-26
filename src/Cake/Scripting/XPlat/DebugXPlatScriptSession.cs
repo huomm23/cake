@@ -2,21 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 //
-// NOTE: Portions of this code was taken from the ScriptCS project 
+// NOTE: Portions of this code was taken from the ScriptCS project
 // which is licensed under the MIT license.
 
 #if NETCORE
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Loader;
+using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.Scripting;
 using Cake.Scripting.Roslyn;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
-using System.Linq;
-using System;
-using Cake.Core;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Loader;
-using System.Globalization;
 
 namespace Cake.Scripting.XPlat
 {
@@ -28,7 +28,7 @@ namespace Cake.Scripting.XPlat
         private const string CompiledType = "Submission#0";
         private const string CompiledMethod = "<Factory>";
 
-        public DebugXPlatScriptSession(IScriptHost host, ICakeLog log) 
+        public DebugXPlatScriptSession(IScriptHost host, ICakeLog log)
             : base(host, log)
         {
             _host = host;
@@ -76,7 +76,7 @@ namespace Cake.Scripting.XPlat
                     var message = string.Format(CultureInfo.InvariantCulture, "Error occurred when compiling: {0}", errors);
                     throw new CakeException(message);
                 }
-            };
+            }
         }
     }
 }

@@ -162,7 +162,7 @@ namespace Cake.Common.Solution.Project
                  select new ProjectAssemblyReference
                  {
                      Include = includeValue,
-                     HintPath = hintPathElement == null || string.IsNullOrEmpty(hintPathElement.Value) 
+                     HintPath = hintPathElement == null || string.IsNullOrEmpty(hintPathElement.Value)
                         ? null : rootPath.CombineWithFilePath(hintPathElement.Value),
                      Name = nameElement == null ? null : nameElement.Value,
                      FusionName = fusionNameElement == null ? null : fusionNameElement.Value,
@@ -189,7 +189,7 @@ namespace Cake.Common.Solution.Project
                      RelativePath = value,
                      Name = nameElement == null ? null : nameElement.Value,
                      Project = projectElement == null ? null : projectElement.Value,
-                     Package = packageElement == null || string.IsNullOrEmpty(packageElement.Value) 
+                     Package = packageElement == null || string.IsNullOrEmpty(packageElement.Value)
                         ? null : rootPath.CombineWithFilePath(packageElement.Value)
                  }).ToArray();
 

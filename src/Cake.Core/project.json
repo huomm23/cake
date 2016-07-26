@@ -1,6 +1,15 @@
 {
   "version": "1.0.0-*",
-
+  "dependencies": {
+    "StyleCop.Analyzers": "1.0.0"
+  },
+  "buildOptions": {
+    "xmlDoc": true,
+    "additionalArguments": [
+      "/ruleset:../Cake.ruleset",
+      "/additionalfile:../stylecop.json"
+    ]
+  },
   "frameworks": {
     "netstandard1.6": {
       "buildOptions": {
@@ -17,7 +26,6 @@
         "Microsoft.Extensions.DependencyModel": "1.0.0"
       }
     },
-
     "net45": {
       "frameworkAssemblies": {
         "System.Data": { "type": "build" },

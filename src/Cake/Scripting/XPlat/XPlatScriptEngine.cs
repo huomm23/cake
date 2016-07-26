@@ -4,8 +4,8 @@
 
 #if NETCORE
 using System.Collections.Generic;
-using Cake.Core.Scripting;
 using Cake.Core.Diagnostics;
+using Cake.Core.Scripting;
 
 namespace Cake.Scripting.XPlat
 {

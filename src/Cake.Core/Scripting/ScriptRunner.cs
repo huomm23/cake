@@ -9,8 +9,8 @@ using System.Reflection;
 using Cake.Core.Configuration;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.Core.Scripting.Analysis;
 using Cake.Core.Polyfill;
+using Cake.Core.Scripting.Analysis;
 
 namespace Cake.Core.Scripting
 {

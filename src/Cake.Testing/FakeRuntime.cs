@@ -19,12 +19,12 @@ namespace Cake.Testing
         public FrameworkName TargetFramework { get; set; }
 
         /// <summary>
-        /// Gets the version of Cake executing the script.
+        /// Gets or sets the version of Cake executing the script.
         /// </summary>
         public Version CakeVersion { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether we're running on CoreClr.
+        /// Gets or sets a value indicating whether we're running on CoreClr.
         /// </summary>
         /// <value>
         /// <c>true</c> if we're runnning on CoreClr; otherwise, <c>false</c>.
