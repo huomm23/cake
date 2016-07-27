@@ -163,7 +163,7 @@ namespace Cake.Core.Tests.Unit.IO
                     var path = new FilePath("temp/hello.txt");
 
                     // When
-                    var result = Record.Exception(() => path.MakeAbsolute((ICakeEnvironment) null));
+                    var result = Record.Exception(() => path.MakeAbsolute((ICakeEnvironment)null));
 
                     // Then
                     Assert.IsArgumentNullException(result, "environment");
@@ -209,7 +209,7 @@ namespace Cake.Core.Tests.Unit.IO
                     var path = new FilePath("./test.txt");
 
                     // When
-                    var result = Record.Exception(() => path.MakeAbsolute((DirectoryPath) null));
+                    var result = Record.Exception(() => path.MakeAbsolute((DirectoryPath)null));
 
                     // Then
                     Assert.IsArgumentNullException(result, "path");

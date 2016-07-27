@@ -74,7 +74,7 @@ namespace Cake.Common.Tests.Unit.IO
                 var zipper = new Zipper(fileSystem, environment, log);
 
                 // When
-                var result = Record.Exception(() => zipper.Zip(null, "/file.zip", new FilePath[] {"/Root/file.txt"}));
+                var result = Record.Exception(() => zipper.Zip(null, "/file.zip", new FilePath[] { "/Root/file.txt" }));
 
                 // Then
                 Assert.IsArgumentNullException(result, "rootPath");
@@ -141,7 +141,7 @@ namespace Cake.Common.Tests.Unit.IO
                 var zipper = new Zipper(fileSystem, environment, log);
 
                 // When
-                zipper.Zip("/Root", "/file.zip", new FilePath[] {"/Root/file.txt"});
+                zipper.Zip("/Root", "/file.zip", new FilePath[] { "/Root/file.txt" });
 
                 // Then
                 Assert.True(fileSystem.GetFile("/file.zip").Exists);

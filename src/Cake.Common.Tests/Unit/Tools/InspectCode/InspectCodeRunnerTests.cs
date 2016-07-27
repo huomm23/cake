@@ -125,7 +125,7 @@ namespace Cake.Common.Tests.Unit.Tools.InspectCode
                 fixture.Settings.SolutionWideAnalysis = true;
                 fixture.Settings.NoSolutionWideAnalysis = true;
 
-                //When
+                // When
                 var result = Record.Exception(() => fixture.Run());
 
                 // Then

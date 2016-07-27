@@ -31,7 +31,7 @@ namespace Cake.Core.Tests.Fixtures
         public FilePath Script { get; set; }
         public IDictionary<string, string> ArgumentDictionary { get; set; }
         public string Source { get; private set; }
-        public IGlobber Globber{ get; set; }
+        public IGlobber Globber { get; set; }
 
         public ScriptRunnerFixture(string fileName = "/Working/build.cake")
         {

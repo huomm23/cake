@@ -47,11 +47,10 @@ namespace Cake.NuGet.Tests.Fixtures
             PackageType = PackageType.Addin;
             InstallPath = new DirectoryPath("./nuget");
         }
-        
 
         public NuGetPackageInstaller CreateInstaller()
         {
-            return new NuGetPackageInstaller(FileSystem, Environment, ProcessRunner, ToolResolver , ContentResolver, Log, Config);
+            return new NuGetPackageInstaller(FileSystem, Environment, ProcessRunner, ToolResolver, ContentResolver, Log, Config);
         }
 
         public IReadOnlyCollection<IFile> Install()

@@ -6,13 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Reflection;
+using System.Text;
 using Cake.Core;
 using Cake.Core.Scripting;
-using Xunit;
 using Cake.Scripting.Mono.CodeGen;
 using Cake.Scripting.Mono.CodeGen.Parsing;
+using Xunit;
 
 namespace Cake.Tests.Fixtures
 {

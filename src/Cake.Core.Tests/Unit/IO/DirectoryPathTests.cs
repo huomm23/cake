@@ -189,7 +189,7 @@ namespace Cake.Core.Tests.Unit.IO
 
                     // When
                     var result = Record.Exception(
-                        () => path.MakeAbsolute((ICakeEnvironment) null));
+                        () => path.MakeAbsolute((ICakeEnvironment)null));
 
                     // Then
                     Assert.IsArgumentNullException(result, "environment");

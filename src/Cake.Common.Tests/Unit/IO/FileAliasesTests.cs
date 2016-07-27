@@ -1183,7 +1183,7 @@ namespace Cake.Common.Tests.Unit.IO
                 var environment = FakeEnvironment.CreateUnixEnvironment();
                 environment.WorkingDirectory = workingDirectory;
                 var fileSystem = new FakeFileSystem(environment);
-                fileSystem.CreateFile(filePath, new byte[] {1, 2, 3, 4});
+                fileSystem.CreateFile(filePath, new byte[] { 1, 2, 3, 4 });
                 context.FileSystem.Returns(fileSystem);
                 context.Environment.Returns(environment);
 

@@ -625,7 +625,7 @@ namespace Cake.Common.Tests.Unit.Tools.WiX
                 // When
                 var result = fixture.Run();
 
-                //Then
+                // Then
                 Assert.Equal("dir \"/Working/src/Cake\" -template fragment -out \"/Working/cake.wxs\"", result.Args);
             }
 
@@ -639,7 +639,7 @@ namespace Cake.Common.Tests.Unit.Tools.WiX
                 // When
                 var result = fixture.Run();
 
-                //Then
+                // Then
                 Assert.Equal("dir \"/Working/src/Cake\" -template module -out \"/Working/cake.wxs\"", result.Args);
             }
 
@@ -653,7 +653,7 @@ namespace Cake.Common.Tests.Unit.Tools.WiX
                 // When
                 var result = fixture.Run();
 
-                //Then
+                // Then
                 Assert.Equal("dir \"/Working/src/Cake\" -template product -out \"/Working/cake.wxs\"", result.Args);
             }
 
