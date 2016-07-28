@@ -6,6 +6,13 @@
       "/additionalfile:../stylecop.json"
     ]
   },
+  "configurations": {
+    "Release": {
+      "buildOptions": {
+        "warningsAsErrors": true
+      }
+    }
+  },
   "dependencies": {
     "Cake.Core": { "target": "project" },
     "StyleCop.Analyzers": "1.0.0",

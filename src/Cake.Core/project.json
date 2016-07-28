@@ -10,6 +10,13 @@
       "/additionalfile:../stylecop.json"
     ]
   },
+  "configurations": {
+    "Release": {
+      "buildOptions": {
+        "warningsAsErrors": true
+      }
+    }
+  },
   "frameworks": {
     "netstandard1.6": {
       "buildOptions": {

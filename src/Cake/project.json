@@ -8,6 +8,13 @@
       "/additionalfile:../stylecop.json"
     ]
   },
+  "configurations": {
+    "Release": {
+      "buildOptions": {
+        "warningsAsErrors": true
+      }
+    }
+  },
   "dependencies": {
     "Cake.Core": { "target": "project" },
     "Cake.Common": { "target": "project" },

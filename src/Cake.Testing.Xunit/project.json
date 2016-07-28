@@ -1,4 +1,11 @@
 {
+  "configurations": {
+    "Release": {
+      "buildOptions": {
+        "warningsAsErrors": true
+      }
+    }
+  },
   "dependencies": {
     "Cake.Core": { "target": "project" },
     "xunit.assert.source": "2.2.0-beta2-build3300"
