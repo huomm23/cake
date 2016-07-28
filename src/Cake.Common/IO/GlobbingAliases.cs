@@ -37,7 +37,7 @@ namespace Cake.Common.IO
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             return new FilePathCollection(context.Globber.Match(pattern).OfType<FilePath>(),
@@ -70,7 +70,7 @@ namespace Cake.Common.IO
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             return new FilePathCollection(context.Globber.Match(pattern, predicate).OfType<FilePath>(),
@@ -98,7 +98,7 @@ namespace Cake.Common.IO
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             return new DirectoryPathCollection(context.Globber.Match(pattern).OfType<DirectoryPath>(),
@@ -131,7 +131,7 @@ namespace Cake.Common.IO
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             return new DirectoryPathCollection(context.Globber.Match(pattern, predicate).OfType<DirectoryPath>(),

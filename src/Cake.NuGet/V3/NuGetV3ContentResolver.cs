@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cake.Core;
-using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using NuGet.Frameworks;
 
@@ -17,16 +16,13 @@ namespace Cake.NuGet.V3
     {
         private readonly IFileSystem _fileSystem;
         private readonly ICakeEnvironment _environment;
-        private readonly ICakeLog _log;
 
         public NuGetV3ContentResolver(
             IFileSystem fileSystem,
-            ICakeEnvironment environment,
-            ICakeLog log) : base(fileSystem)
+            ICakeEnvironment environment) : base(fileSystem)
         {
             _fileSystem = fileSystem;
             _environment = environment;
-            _log = log;
         }
 
         protected override IReadOnlyCollection<IFile> GetAddinAssemblies(DirectoryPath path)
@@ -72,7 +68,6 @@ namespace Cake.NuGet.V3
 
         private NuGetFramework ParseFromDirectoryPath(NuGetFramework current, DirectoryPath path)
         {
-            var provider = new DefaultFrameworkNameProvider();
             var queue = new Queue<string>(path.Segments);
             while (queue.Count > 0)
             {

@@ -13,8 +13,6 @@ namespace Cake.Core.IO
     /// </summary>
     public sealed class PathComparer : IEqualityComparer<Path>
     {
-        private readonly bool _isCaseSensitive;
-
         /// <summary>
         /// The default path comparer.
         /// </summary>
@@ -32,10 +30,7 @@ namespace Cake.Core.IO
         /// <value>
         /// <c>true</c> if comparison is case sensitive; otherwise, <c>false</c>.
         /// </value>
-        public bool IsCaseSensitive
-        {
-            get { return _isCaseSensitive; }
-        }
+        public bool IsCaseSensitive { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PathComparer"/> class.
@@ -43,7 +38,7 @@ namespace Cake.Core.IO
         /// <param name="isCaseSensitive">if set to <c>true</c>, comparison is case sensitive.</param>
         public PathComparer(bool isCaseSensitive)
         {
-            _isCaseSensitive = isCaseSensitive;
+            IsCaseSensitive = isCaseSensitive;
         }
 
         /// <summary>
@@ -54,9 +49,9 @@ namespace Cake.Core.IO
         {
             if (environment == null)
             {
-                throw new ArgumentNullException("environment");
+                throw new ArgumentNullException(nameof(environment));
             }
-            _isCaseSensitive = environment.Platform.IsUnix();
+            IsCaseSensitive = environment.Platform.IsUnix();
         }
 
         /// <summary>
@@ -96,7 +91,7 @@ namespace Cake.Core.IO
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
             if (IsCaseSensitive)
             {

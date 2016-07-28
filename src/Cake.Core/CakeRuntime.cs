@@ -13,25 +13,15 @@ namespace Cake.Core
     /// </summary>
     public sealed class CakeRuntime : ICakeRuntime
     {
-        private readonly FrameworkName _framework;
-        private readonly bool _isCoreClr;
-        private readonly Version _version;
-
         /// <summary>
         /// Gets the target .NET framework version that the current AppDomain is targeting.
         /// </summary>
-        public FrameworkName TargetFramework
-        {
-            get { return _framework; }
-        }
+        public FrameworkName TargetFramework { get; }
 
         /// <summary>
         /// Gets the version of Cake executing the script.
         /// </summary>
-        public Version CakeVersion
-        {
-            get { return _version; }
-        }
+        public Version CakeVersion { get; }
 
         /// <summary>
         /// Gets a value indicating whether we're running on CoreClr.
@@ -39,19 +29,16 @@ namespace Cake.Core
         /// <value>
         /// <c>true</c> if we're runnning on CoreClr; otherwise, <c>false</c>.
         /// </value>
-        public bool IsCoreClr
-        {
-            get { return _isCoreClr; }
-        }
+        public bool IsCoreClr { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CakeRuntime"/> class.
         /// </summary>
         public CakeRuntime()
         {
-            _framework = EnvironmentHelper.GetFramework();
-            _version = AssemblyHelper.GetExecutingAssembly().GetName().Version;
-            _isCoreClr = EnvironmentHelper.IsCoreClr();
+            TargetFramework = EnvironmentHelper.GetFramework();
+            CakeVersion = AssemblyHelper.GetExecutingAssembly().GetName().Version;
+            IsCoreClr = EnvironmentHelper.IsCoreClr();
         }
     }
 }

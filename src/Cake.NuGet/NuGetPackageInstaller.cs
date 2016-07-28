@@ -49,27 +49,27 @@ namespace Cake.NuGet
         {
             if (fileSystem == null)
             {
-                throw new ArgumentNullException("fileSystem");
+                throw new ArgumentNullException(nameof(fileSystem));
             }
             if (environment == null)
             {
-                throw new ArgumentNullException("environment");
+                throw new ArgumentNullException(nameof(environment));
             }
             if (processRunner == null)
             {
-                throw new ArgumentNullException("processRunner");
+                throw new ArgumentNullException(nameof(processRunner));
             }
             if (toolResolver == null)
             {
-                throw new ArgumentNullException("toolResolver");
+                throw new ArgumentNullException(nameof(toolResolver));
             }
             if (contentResolver == null)
             {
-                throw new ArgumentNullException("contentResolver");
+                throw new ArgumentNullException(nameof(contentResolver));
             }
             if (log == null)
             {
-                throw new ArgumentNullException("log");
+                throw new ArgumentNullException(nameof(log));
             }
 
             _fileSystem = fileSystem;
@@ -94,7 +94,7 @@ namespace Cake.NuGet
         {
             if (package == null)
             {
-                throw new ArgumentNullException("package");
+                throw new ArgumentNullException(nameof(package));
             }
             return package.Scheme.Equals("nuget", StringComparison.OrdinalIgnoreCase);
         }
@@ -110,11 +110,11 @@ namespace Cake.NuGet
         {
             if (package == null)
             {
-                throw new ArgumentNullException("package");
+                throw new ArgumentNullException(nameof(package));
             }
             if (path == null)
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             }
 
             path = path.MakeAbsolute(_environment);

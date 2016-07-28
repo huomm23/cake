@@ -36,7 +36,7 @@ namespace Cake.Commands
         {
             if (options == null)
             {
-                throw new ArgumentNullException("options");
+                throw new ArgumentNullException(nameof(options));
             }
 
             var message = "Attach debugger to process {0} to continue";

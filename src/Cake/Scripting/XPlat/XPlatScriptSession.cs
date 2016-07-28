@@ -14,62 +14,48 @@ namespace Cake.Scripting.XPlat
 {
     internal abstract class XPlatScriptSession : IScriptSession
     {
-        private readonly IScriptHost _host;
         private readonly ICakeLog _log;
-        private readonly HashSet<FilePath> _referencePaths;
-        private readonly HashSet<Assembly> _references;
-        private readonly HashSet<string> _namespaces;
 
-        public HashSet<FilePath> ReferencePaths
-        {
-            get { return _referencePaths; }
-        }
+        public HashSet<FilePath> ReferencePaths { get; }
 
-        public HashSet<Assembly> References
-        {
-            get { return _references; }
-        }
+        public HashSet<Assembly> References { get; }
 
-        public HashSet<string> Namespaces
-        {
-            get { return _namespaces; }
-        }
+        public HashSet<string> Namespaces { get; }
 
-        protected XPlatScriptSession(IScriptHost host, ICakeLog log)
+        protected XPlatScriptSession(ICakeLog log)
         {
-            _host = host;
             _log = log;
-            _referencePaths = new HashSet<FilePath>(PathComparer.Default);
-            _references = new HashSet<Assembly>();
-            _namespaces = new HashSet<string>(StringComparer.Ordinal);
+            ReferencePaths = new HashSet<FilePath>(PathComparer.Default);
+            References = new HashSet<Assembly>();
+            Namespaces = new HashSet<string>(StringComparer.Ordinal);
         }
 
         public void AddReference(Assembly assembly)
         {
             if (assembly == null)
             {
-                throw new ArgumentNullException("assembly");
+                throw new ArgumentNullException(nameof(assembly));
             }
             _log.Debug("Adding reference to {0}...", new FilePath(assembly.Location).GetFilename().FullPath);
-            _references.Add(assembly);
+            References.Add(assembly);
         }
 
         public void AddReference(FilePath path)
         {
             if (path == null)
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             }
             _log.Debug("Adding reference to {0}...", path.GetFilename().FullPath);
-            _referencePaths.Add(path);
+            ReferencePaths.Add(path);
         }
 
         public void ImportNamespace(string @namespace)
         {
-            if (!_namespaces.Contains(@namespace))
+            if (!Namespaces.Contains(@namespace))
             {
                 _log.Debug("Importing namespace {0}...", @namespace);
-                _namespaces.Add(@namespace);
+                Namespaces.Add(@namespace);
             }
         }
 

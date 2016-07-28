@@ -954,12 +954,11 @@ namespace Cake.Core.Tests.Unit
             public void Should_Return_Report_That_Marks_Executed_Tasks_As_Executed()
             {
                 // Given
-                var result = new List<string>();
                 var fixture = new CakeEngineFixture();
                 var engine = fixture.CreateEngine();
-                engine.RegisterTask("A").IsDependentOn("B").Does(() => result.Add("A"));
+                engine.RegisterTask("A").IsDependentOn("B").Does(() => { });
                 engine.RegisterTask("B").IsDependentOn("C");
-                engine.RegisterTask("C").WithCriteria(() => false).Does(() => result.Add("C"));
+                engine.RegisterTask("C").WithCriteria(() => false).Does(() => { });
 
                 // When
                 var report = engine.RunTarget(fixture.Context, fixture.ExecutionStrategy, "A");

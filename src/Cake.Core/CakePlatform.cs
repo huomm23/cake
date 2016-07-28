@@ -11,17 +11,11 @@ namespace Cake.Core
     /// </summary>
     public sealed class CakePlatform : ICakePlatform
     {
-        private readonly PlatformFamily _family;
-        private readonly bool _is64Bit;
-
         /// <summary>
         /// Gets the platform family.
         /// </summary>
         /// <value>The platform family.</value>
-        public PlatformFamily Family
-        {
-            get { return _family; }
-        }
+        public PlatformFamily Family { get; }
 
         /// <summary>
         /// Gets a value indicating whether or not the current platform is 64 bit.
@@ -29,18 +23,15 @@ namespace Cake.Core
         /// <value>
         /// <c>true</c> if current platform is 64 bit; otherwise, <c>false</c>.
         /// </value>
-        public bool Is64Bit
-        {
-            get { return _is64Bit; }
-        }
+        public bool Is64Bit { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CakePlatform"/> class.
         /// </summary>
         public CakePlatform()
         {
-            _family = EnvironmentHelper.GetPlatformFamily();
-            _is64Bit = EnvironmentHelper.Is64BitOperativeSystem();
+            Family = EnvironmentHelper.GetPlatformFamily();
+            Is64Bit = EnvironmentHelper.Is64BitOperativeSystem();
         }
     }
 }

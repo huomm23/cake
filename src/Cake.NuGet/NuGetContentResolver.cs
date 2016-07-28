@@ -22,7 +22,7 @@ namespace Cake.NuGet
         {
             if (path == null)
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             }
 
             if (type == PackageType.Addin)

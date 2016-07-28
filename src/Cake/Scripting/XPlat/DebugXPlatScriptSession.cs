@@ -29,7 +29,7 @@ namespace Cake.Scripting.XPlat
         private const string CompiledMethod = "<Factory>";
 
         public DebugXPlatScriptSession(IScriptHost host, ICakeLog log)
-            : base(host, log)
+            : base(log)
         {
             _host = host;
             _log = log;
@@ -68,7 +68,7 @@ namespace Cake.Scripting.XPlat
                     var submissionStates = new object[2];
                     submissionStates[0] = _host;
 
-                    method.Invoke(null, new[] { submissionStates });
+                    method.Invoke(null, new object[] { submissionStates });
                 }
                 else
                 {

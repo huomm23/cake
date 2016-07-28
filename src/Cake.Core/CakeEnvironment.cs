@@ -4,9 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Versioning;
 using Cake.Core.IO;
 using Cake.Core.Polyfill;
@@ -18,10 +16,6 @@ namespace Cake.Core
     /// </summary>
     public sealed class CakeEnvironment : ICakeEnvironment
     {
-        private readonly ICakePlatform _platform;
-        private readonly ICakeRuntime _runtime;
-        private readonly DirectoryPath _applicationRoot;
-
         /// <summary>
         /// Gets or sets the working directory.
         /// </summary>
@@ -36,28 +30,19 @@ namespace Cake.Core
         /// Gets the application root path.
         /// </summary>
         /// <value>The application root path.</value>
-        public DirectoryPath ApplicationRoot
-        {
-            get { return _applicationRoot; }
-        }
+        public DirectoryPath ApplicationRoot { get; }
 
         /// <summary>
         /// Gets the platform Cake is running on.
         /// </summary>
         /// <value>The platform Cake is running on.</value>
-        public ICakePlatform Platform
-        {
-            get { return _platform; }
-        }
+        public ICakePlatform Platform { get; }
 
         /// <summary>
         /// Gets the runtime Cake is running in.
         /// </summary>
         /// <value>The runtime Cake is running in.</value>
-        public ICakeRuntime Runtime
-        {
-            get { return _runtime; }
-        }
+        public ICakeRuntime Runtime { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CakeEnvironment" /> class.
@@ -66,13 +51,13 @@ namespace Cake.Core
         /// <param name="runtime">The runtime.</param>
         public CakeEnvironment(ICakePlatform platform, ICakeRuntime runtime)
         {
-            _platform = platform;
-            _runtime = runtime;
+            Platform = platform;
+            Runtime = runtime;
 
             // Get the application root.
             var assembly = AssemblyHelper.GetExecutingAssembly();
             var path = System.IO.Path.GetDirectoryName(assembly.Location);
-            _applicationRoot = new DirectoryPath(path);
+            ApplicationRoot = new DirectoryPath(path);
 
             // Get the working directory.
             WorkingDirectory = new DirectoryPath(System.IO.Directory.GetCurrentDirectory());
@@ -87,7 +72,7 @@ namespace Cake.Core
         /// </returns>
         public DirectoryPath GetSpecialPath(SpecialPath path)
         {
-            return SpecialPathHelper.GetFolderPath(_platform, path);
+            return SpecialPathHelper.GetFolderPath(Platform, path);
         }
 
         /// <summary>
@@ -125,7 +110,7 @@ namespace Cake.Core
         [Obsolete("Please use CakeEnvironment.Platform.Is64Bit instead.")]
         public bool Is64BitOperativeSystem()
         {
-            return _platform.Is64Bit;
+            return Platform.Is64Bit;
         }
 
         /// <summary>
@@ -137,7 +122,7 @@ namespace Cake.Core
         [Obsolete("Please use CakeEnvironment.Platform.IsUnix instead.")]
         public bool IsUnix()
         {
-            return _platform.IsUnix();
+            return Platform.IsUnix();
         }
 
         /// <summary>
@@ -149,7 +134,7 @@ namespace Cake.Core
         [Obsolete("Please use CakeEnvironment.ApplicationRoot instead.")]
         public DirectoryPath GetApplicationRoot()
         {
-            return _applicationRoot;
+            return ApplicationRoot;
         }
 
         /// <summary>
@@ -159,7 +144,7 @@ namespace Cake.Core
         [Obsolete("Please use CakeEnvironment.Runtime.TargetFramework instead.")]
         public FrameworkName GetTargetFramework()
         {
-            return _runtime.TargetFramework;
+            return Runtime.TargetFramework;
         }
 
         private static void SetWorkingDirectory(DirectoryPath path)

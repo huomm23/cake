@@ -8,7 +8,7 @@ using Cake.NuGet.Tests.Fixtures;
 using Cake.Testing;
 using Xunit;
 
-namespace Cake.NuGet.Tests.Unit
+namespace Cake.NuGet.Tests.Unit.V3
 {
     public sealed class NuGetV3ContentResolverTests
     {

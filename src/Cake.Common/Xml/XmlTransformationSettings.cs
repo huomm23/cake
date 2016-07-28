@@ -13,7 +13,7 @@ namespace Cake.Common.Xml
     /// </summary>
     public sealed class XmlTransformationSettings
     {
-        internal XmlWriterSettings XmlWriterSettings { get; private set; }
+        internal XmlWriterSettings XmlWriterSettings { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether overwriting existing file is permitted

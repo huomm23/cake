@@ -16,7 +16,7 @@ namespace Cake.NuGet.Tests.Fixtures
 
         protected override INuGetContentResolver GetResolver()
         {
-            return new NuGetV3ContentResolver(FileSystem, Environment, Log);
+            return new NuGetV3ContentResolver(FileSystem, Environment);
         }
     }
 }

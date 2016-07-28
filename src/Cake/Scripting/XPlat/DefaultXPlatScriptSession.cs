@@ -17,7 +17,7 @@ namespace Cake.Scripting.XPlat
         private readonly ICakeLog _log;
 
         public DefaultXPlatScriptSession(IScriptHost host, ICakeLog log)
-            : base(host, log)
+            : base(log)
         {
             _host = host;
             _log = log;

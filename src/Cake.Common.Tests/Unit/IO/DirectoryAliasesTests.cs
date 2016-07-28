@@ -277,7 +277,7 @@ namespace Cake.Common.Tests.Unit.IO
                     };
 
                     // When
-                    Record.Exception(() => DirectoryAliases.CleanDirectories(context, paths));
+                    DirectoryAliases.CleanDirectories(context, paths);
 
                     // Then
                     Assert.Empty(fixture.FileSystem.GetDirectory(paths[0]).GetFiles("*", SearchScope.Recursive));
@@ -370,7 +370,7 @@ namespace Cake.Common.Tests.Unit.IO
                     };
 
                     // When
-                    Record.Exception(() => DirectoryAliases.CleanDirectories(context, paths));
+                    DirectoryAliases.CleanDirectories(context, paths);
 
                     // Then
                     Assert.Empty(fixture.FileSystem.GetDirectory(paths[0]).GetFiles("*", SearchScope.Recursive));

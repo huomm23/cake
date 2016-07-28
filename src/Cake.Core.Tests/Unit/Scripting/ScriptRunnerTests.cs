@@ -169,7 +169,7 @@ namespace Cake.Core.Tests.Unit.Scripting
             [InlineData("System.Data")]
             [InlineData("System.Xml")]
             [InlineData("System.Xml.Linq")]
-            public void Should_Add_References_To_Session(string @assemblyName)
+            public void Should_Add_References_To_Session(string assemblyName)
             {
                 // Given
                 var fixture = new ScriptRunnerFixture();

@@ -61,7 +61,7 @@ namespace Cake.Tests.Fixtures
         private static IEnumerable<string> ReadLinesFromResource(Assembly assembly, string path, bool input)
         {
             Assert.NotNull(assembly);
-            using (var stream = assembly.GetManifestResourceStream(string.Format("{0}.{1}", path, input ? "input" : "output")))
+            using (var stream = assembly.GetManifestResourceStream($"{path}.{(input ? "input" : "output")}"))
             {
                 if (stream != null)
                 {

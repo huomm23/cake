@@ -22,7 +22,7 @@ namespace Cake.Core
         {
             if (platform == null)
             {
-                throw new ArgumentNullException("platform");
+                throw new ArgumentNullException(nameof(platform));
             }
             return EnvironmentHelper.IsUnix(platform.Family);
         }

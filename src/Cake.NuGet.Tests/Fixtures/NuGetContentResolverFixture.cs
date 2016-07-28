@@ -20,7 +20,7 @@ namespace Cake.NuGet.Tests.Fixtures
         public DirectoryPath Path { get; set; }
         public PackageType PackageType { get; set; }
 
-        public NuGetContentResolverFixture(string framework)
+        protected NuGetContentResolverFixture(string framework)
         {
             Environment = FakeEnvironment.CreateUnixEnvironment();
             Environment.Runtime.TargetFramework = new FrameworkName(framework);

@@ -22,7 +22,7 @@ namespace Cake.NuGet
         {
             if (registry == null)
             {
-                throw new ArgumentNullException("registry");
+                throw new ArgumentNullException(nameof(registry));
             }
 
 #if NETCORE
