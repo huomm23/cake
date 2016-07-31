@@ -724,7 +724,6 @@ namespace Cake.Common.Tests.Unit.Tools.WiX
 
                 // Then
                 Assert.Equal("dir \"/Working/src/Cake\" -out \"/Working/cake.wxs\"", result.Args);
-
             }
         }
     }

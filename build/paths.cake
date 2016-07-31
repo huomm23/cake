@@ -28,6 +28,8 @@ public class BuildPaths
         var buildDir = context.Directory("./src/Cake/bin") + context.Directory(configuration);
         var artifactsDir = (DirectoryPath)(context.Directory("./artifacts") + context.Directory("v" + semVersion));
         var artifactsBinDir = artifactsDir.Combine("bin");
+        var artifactsBinNet45 = artifactsBinDir.Combine("net45");
+        var artifactsBinNetCoreApp10 = artifactsBinDir.Combine("netcoreapp1.0");
         var testResultsDir = artifactsDir.Combine("test-results");
         var nugetRoot = artifactsDir.Combine("nuget");
         var testingDir = context.Directory("./src/Cake.Testing/bin") + context.Directory(configuration);
@@ -74,7 +76,9 @@ public class BuildPaths
             artifactsDir,
             testResultsDir,
             nugetRoot,
-            artifactsBinDir
+            artifactsBinDir,
+            artifactsBinNet45,
+            artifactsBinNetCoreApp10
             );
 
         var buildFiles = new BuildFiles(
@@ -138,24 +142,32 @@ public class BuildDirectories
     public DirectoryPath TestResults { get; private set; }
     public DirectoryPath NugetRoot { get; private set; }
     public DirectoryPath ArtifactsBin { get; private set; }
+    public DirectoryPath ArtifactsBinNet45 { get; private set; }
+    public DirectoryPath ArtifactsBinNetCoreApp10 { get; private set; }
     public ICollection<DirectoryPath> ToClean { get; private set; }
 
     public BuildDirectories(
         DirectoryPath artifactsDir,
         DirectoryPath testResultsDir,
         DirectoryPath nugetRoot,
-        DirectoryPath artifactsBinDir
+        DirectoryPath artifactsBinDir,
+        DirectoryPath artifactsBinNet45,
+        DirectoryPath artifactsBinNetCoreApp10
         )
     {
         Artifacts = artifactsDir;
         TestResults = testResultsDir;
         NugetRoot = nugetRoot;
         ArtifactsBin = artifactsBinDir;
+        ArtifactsBinNet45 = artifactsBinNet45;
+        ArtifactsBinNetCoreApp10 = artifactsBinNetCoreApp10;
         ToClean = new[] {
             Artifacts,
             TestResults,
             NugetRoot,
-            ArtifactsBin
+            ArtifactsBin,
+            ArtifactsBinNet45,
+            ArtifactsBinNetCoreApp10
         };
     }
 }

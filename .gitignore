@@ -6,6 +6,7 @@
 [Pp]ackages/
 /[Bb]uild/
 /[Aa]rtifacts/
+/[Tt]ools/
 *.sln.ide/
 
 # Visual Studio

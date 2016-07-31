@@ -73,53 +73,29 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    var maxRetryCount = 5;
-    var toolTimeout = 1d;
-    Policy
-        .Handle<Exception>()
-        .Retry(maxRetryCount, (exception, retryCount, context) => {
-            if (retryCount == maxRetryCount)
-            {
-                throw exception;
-            }
-            else
-            {
-                Verbose("{0}", exception);
-                toolTimeout+=0.5;
-            }})
-        .Execute(()=> {
-            NuGetRestore("./src/Cake.sln", new NuGetRestoreSettings {
-                Source = new List<string> {
-                    "https://api.nuget.org/v3/index.json",
-                    "https://www.myget.org/F/roslyn-nightly/api/v3/index.json"
-                },
-                ToolTimeout = TimeSpan.FromMinutes(toolTimeout)
-            });
-        });
+    DotNetCoreRestore("./", new DotNetCoreRestoreSettings
+    {
+        Verbose = false,
+        Verbosity = DotNetCoreRestoreVerbosity.Warning,
+        Sources = new [] {
+            "https://www.myget.org/F/xunit/api/v3/index.json",
+            "https://dotnet.myget.org/F/dotnet-core/api/v3/index.json",
+            "https://dotnet.myget.org/F/cli-deps/api/v3/index.json",
+            "https://api.nuget.org/v3/index.json",
+        },
+    });
 });
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-    if(parameters.IsRunningOnUnix)
+    var projects = GetFiles("./**/*.xproj");
+    foreach(var project in projects)
     {
-        XBuild("./src/Cake.sln", new XBuildSettings()
-            .SetConfiguration(parameters.Configuration)
-            .WithProperty("POSIX", "True")
-            .WithProperty("TreatWarningsAsErrors", "True")
-            .SetVerbosity(Verbosity.Minimal)
-        );
-    }
-    else
-    {
-        MSBuild("./src/Cake.sln", new MSBuildSettings()
-            .SetConfiguration(parameters.Configuration)
-            .WithProperty("Windows", "True")
-            .WithProperty("TreatWarningsAsErrors", "True")
-            .UseToolVersion(MSBuildToolVersion.NET45)
-            .SetVerbosity(Verbosity.Minimal)
-            .SetNodeReuse(false));
+        DotNetCoreBuild(project.GetDirectory().FullPath, new DotNetCoreBuildSettings {
+            Configuration = parameters.Configuration
+        });
     }
 });
 
@@ -127,11 +103,15 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    XUnit2("./src/**/bin/" + parameters.Configuration + "/*.Tests.dll", new XUnit2Settings {
-        OutputDirectory = parameters.Paths.Directories.TestResults,
-        XmlReportV1 = true,
-        NoAppDomain = true
-    });
+    var projects = GetFiles("./src/**/*.Tests.xproj");
+    foreach(var project in projects) 
+    {
+        DotNetCoreTest(project.GetDirectory().FullPath, new DotNetCoreTestSettings {
+            Configuration = parameters.Configuration,
+            NoBuild = true,
+            Verbose = false
+        });
+    }
 });
 
 
@@ -139,19 +119,30 @@ Task("Copy-Files")
     .IsDependentOn("Run-Unit-Tests")
     .Does(() =>
 {
-    CopyFiles(
-        parameters.Paths.Files.ArtifactsSourcePaths,
-        parameters.Paths.Directories.ArtifactsBin
-    );
+    // .NET 4.5
+    DotNetCorePublish("./src/Cake", new DotNetCorePublishSettings
+    {
+        Framework = "net45",
+        Configuration = parameters.Configuration,
+        OutputDirectory = parameters.Paths.Directories.ArtifactsBinNet45
+    });
+
+    // .NET Core
+    DotNetCorePublish("./src/Cake", new DotNetCorePublishSettings
+    {
+        Framework = "netcoreapp1.0",
+        Configuration = parameters.Configuration,
+        OutputDirectory = parameters.Paths.Directories.ArtifactsBinNetCoreApp10,
+        NoBuild = true,
+        Verbose = false
+    });
 });
 
 Task("Zip-Files")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
-    var files = GetFiles( parameters.Paths.Directories.ArtifactsBin.FullPath + "/*")
-      - GetFiles(parameters.Paths.Directories.ArtifactsBin.FullPath + "/*.Testing.*");
-
+    var files = GetFiles( parameters.Paths.Directories.ArtifactsBin.FullPath + "/**/*");
     Zip(parameters.Paths.Directories.ArtifactsBin, parameters.Paths.Files.ZipArtifactPath, files);
 });
 
@@ -177,16 +168,22 @@ Task("Create-NuGet-Packages")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
-    foreach(var package in parameters.Packages.Nuget)
+    // Build libraries
+    var projects = GetFiles("./**/*.xproj");
+    foreach(var project in projects)
     {
-        // Create package.
-        NuGetPack(package.NuspecPath, new NuGetPackSettings {
-            Version = parameters.Version.SemVersion,
-            ReleaseNotes = parameters.ReleaseNotes.Notes.ToArray(),
-            BasePath = parameters.Paths.Directories.ArtifactsBin,
+        var name = project.GetDirectory().FullPath; 
+        if(name.EndsWith("Cake") || name.EndsWith("Tests") 
+            || name.EndsWith("Xunit") || name.EndsWith("NuGet")) 
+        {
+            continue;
+        }
+
+        DotNetCorePack(project.GetDirectory().FullPath, new DotNetCorePackSettings {
+            Configuration = parameters.Configuration,
             OutputDirectory = parameters.Paths.Directories.NugetRoot,
-            Symbols = false,
-            NoPackageAnalysis = true
+            NoBuild = true,
+            Verbose = false
         });
     }
 });
