@@ -2,7 +2,10 @@
   "version": "1.0.0-*",
   "dependencies": {
     "Cake.Core": { "target": "project" },
-    "StyleCop.Analyzers": "1.0.0"
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+      }
   },
   "buildOptions": {
     "xmlDoc": true,
@@ -33,7 +36,6 @@
         "System.ComponentModel.TypeConverter": "4.0.0"
       }
     },
-
     "net45": {
       "frameworkAssemblies": {
         "System.Xml": { "type": "build" },

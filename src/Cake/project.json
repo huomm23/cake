@@ -19,7 +19,10 @@
     "Cake.Core": { "target": "project" },
     "Cake.Common": { "target": "project" },
     "Cake.NuGet": { "target": "project" },
-    "StyleCop.Analyzers": "1.0.0"
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+      }
   },
   "frameworks": {
     "netcoreapp1.0": {

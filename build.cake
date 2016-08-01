@@ -142,8 +142,8 @@ Task("Zip-Files")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
-    var files = GetFiles( parameters.Paths.Directories.ArtifactsBin.FullPath + "/**/*");
-    Zip(parameters.Paths.Directories.ArtifactsBin, parameters.Paths.Files.ZipArtifactPath, files);
+    var files = GetFiles( parameters.Paths.Directories.ArtifactsBinNet45.FullPath + "/**/*");
+    Zip(parameters.Paths.Directories.ArtifactsBinNet45, parameters.Paths.Files.ZipArtifactPath, files);
 });
 
 Task("Create-Chocolatey-Packages")
@@ -168,7 +168,6 @@ Task("Create-NuGet-Packages")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
-    // Build libraries
     var projects = GetFiles("./**/*.xproj");
     foreach(var project in projects)
     {
@@ -194,7 +193,6 @@ Task("Upload-AppVeyor-Artifacts")
     .Does(() =>
 {
     AppVeyor.UploadArtifact(parameters.Paths.Files.ZipArtifactPath);
-
     foreach(var package in GetFiles(parameters.Paths.Directories.NugetRoot + "/*"))
     {
         AppVeyor.UploadArtifact(package);

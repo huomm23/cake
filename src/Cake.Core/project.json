@@ -1,7 +1,10 @@
 {
   "version": "1.0.0-*",
   "dependencies": {
-    "StyleCop.Analyzers": "1.0.0"
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+      }
   },
   "buildOptions": {
     "xmlDoc": true,

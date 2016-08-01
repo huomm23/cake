@@ -15,8 +15,11 @@
   },
   "dependencies": {
     "Cake.Core": { "target": "project" },
-    "StyleCop.Analyzers": "1.0.0",
-    "xunit.core": "2.2.0-beta2-build3300"
+    "xunit.core": "2.2.0-beta2-build3300",
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+      }
   },
   "frameworks": {
     "netstandard1.6": {

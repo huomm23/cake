@@ -21,7 +21,10 @@
     "Cake.NuGet": { "target": "project" },
     "Cake.Testing": { "target": "project" },
     "Cake.Testing.Xunit": { "target": "project" },
-    "StyleCop.Analyzers": "1.0.0"
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+      }
   },
 
   "frameworks": {
