@@ -146,8 +146,13 @@ Task("Zip-Files")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
-    var files = GetFiles( parameters.Paths.Directories.ArtifactsBinNet45.FullPath + "/**/*");
-    Zip(parameters.Paths.Directories.ArtifactsBinNet45, parameters.Paths.Files.ZipArtifactPath, files);
+    // .NET 4.5
+    var homebrewFiles = GetFiles( parameters.Paths.Directories.ArtifactsBinNet45.FullPath + "/**/*");
+    Zip(parameters.Paths.Directories.ArtifactsBinNet45, parameters.Paths.Files.ZipArtifactPathDesktop, homebrewFiles);
+
+    // .NET Core
+    var coreclrFiles = GetFiles( parameters.Paths.Directories.ArtifactsBin.FullPath + "/**/*");
+    Zip(parameters.Paths.Directories.ArtifactsBin, parameters.Paths.Files.ZipArtifactPathCoreClr, coreclrFiles);
 });
 
 Task("Create-Chocolatey-Packages")
@@ -196,7 +201,8 @@ Task("Upload-AppVeyor-Artifacts")
     .WithCriteria(() => parameters.IsRunningOnAppVeyor)
     .Does(() =>
 {
-    AppVeyor.UploadArtifact(parameters.Paths.Files.ZipArtifactPath);
+    AppVeyor.UploadArtifact(parameters.Paths.Files.ZipArtifactPathDesktop);
+    AppVeyor.UploadArtifact(parameters.Paths.Files.ZipArtifactPathCoreClr);
     foreach(var package in GetFiles(parameters.Paths.Directories.NugetRoot + "/*"))
     {
         AppVeyor.UploadArtifact(package);
@@ -320,8 +326,7 @@ Task("Publish-HomeBrew")
     .IsDependentOn("Zip-Files")
 	.Does(() =>
 {
-    var hash = CalculateFileHash(parameters.Paths.Files.ZipArtifactPath).ToHex();
-
+    var hash = CalculateFileHash(parameters.Paths.Files.ZipArtifactPathDesktop).ToHex();
     Information("Hash for creating HomeBrew PullRequest: {0}", hash);
 })
 .OnError(exception =>
@@ -338,8 +343,8 @@ Task("Publish-GitHub-Release")
     .WithCriteria(() => parameters.IsTagged)
     .Does(() =>
 {
-    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake", parameters.Version.Milestone, parameters.Paths.Files.ZipArtifactPath.ToString());
-
+    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake", parameters.Version.Milestone, parameters.Paths.Files.ZipArtifactPathDesktop.ToString());
+    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake", parameters.Version.Milestone, parameters.Paths.Files.ZipArtifactPathCoreClr.ToString());
     GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake", parameters.Version.Milestone);
 })
 .OnError(exception =>

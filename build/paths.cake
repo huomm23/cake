@@ -74,7 +74,8 @@ public class BuildPaths
             .Select(file => new ChocolateyNuSpecContent {Source = "../" + relPath.CombineWithFilePath(file).FullPath})
             .ToArray();
 
-        var zipArtifactPath = artifactsDir.CombineWithFilePath("Cake-bin-v" + semVersion + ".zip");
+        var zipArtifactPathCoreClr = artifactsDir.CombineWithFilePath("Cake-coreclr-bin-v" + semVersion + ".zip");
+        var zipArtifactPathDesktop = artifactsDir.CombineWithFilePath("Cake-net45-bin-v" + semVersion + ".zip");
 
         var buildDirectories = new BuildDirectories(
             artifactsDir,
@@ -91,7 +92,8 @@ public class BuildPaths
             testingAssemblyPaths,
             repoFilesPaths,
             artifactSourcePaths,
-            zipArtifactPath
+            zipArtifactPathCoreClr,
+            zipArtifactPathDesktop
             );
 
         return new BuildPaths
@@ -109,7 +111,8 @@ public class BuildFiles
     public ICollection<FilePath> TestingAssemblyPaths { get; private set; }
     public ICollection<FilePath> RepoFilesPaths { get; private set; }
     public ICollection<FilePath> ArtifactsSourcePaths { get; private set; }
-    public FilePath ZipArtifactPath { get; private set; }
+    public FilePath ZipArtifactPathCoreClr { get; private set; }
+    public FilePath ZipArtifactPathDesktop { get; private set; }
 
     public BuildFiles(
         ICakeContext context,
@@ -117,14 +120,16 @@ public class BuildFiles
         FilePath[] testingAssemblyPaths,
         FilePath[] repoFilesPaths,
         FilePath[] artifactsSourcePaths,
-        FilePath zipArtifactPath
+        FilePath zipArtifactPathCoreClr,
+        FilePath zipArtifactPathDesktop
         )
     {
         CakeAssemblyPaths = Filter(context, cakeAssemblyPaths);
         TestingAssemblyPaths = Filter(context, testingAssemblyPaths);
         RepoFilesPaths = Filter(context, repoFilesPaths);
         ArtifactsSourcePaths = Filter(context, artifactsSourcePaths);
-        ZipArtifactPath = zipArtifactPath;
+        ZipArtifactPathCoreClr = zipArtifactPathCoreClr;
+        ZipArtifactPathDesktop = zipArtifactPathDesktop;
     }
 
     private static FilePath[] Filter(ICakeContext context, FilePath[] files)
