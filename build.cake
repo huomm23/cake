@@ -136,6 +136,10 @@ Task("Copy-Files")
         NoBuild = true,
         Verbose = false
     });
+
+    // Copy license
+    CopyFileToDirectory("./LICENSE", parameters.Paths.Directories.ArtifactsBinNet45);
+    CopyFileToDirectory("./LICENSE", parameters.Paths.Directories.ArtifactsBinNetCoreApp10);
 });
 
 Task("Zip-Files")

@@ -34,22 +34,26 @@ public class BuildPaths
         var nugetRoot = artifactsDir.Combine("nuget");
         var testingDir = context.Directory("./src/Cake.Testing/bin") + context.Directory(configuration);
 
-        var cakeAssemblyPaths = new FilePath[] {
-            buildDir + context.File("Cake.exe"),
-            buildDir + context.File("Cake.pdb"),
-            buildDir + context.File("Cake.Core.dll"),
-            buildDir + context.File("Cake.Core.pdb"),
-            buildDir + context.File("Cake.Core.xml"),
-            buildDir + context.File("Cake.NuGet.dll"),
-            buildDir + context.File("Cake.NuGet.pdb"),
-            buildDir + context.File("Cake.NuGet.xml"),
-            buildDir + context.File("Cake.Common.dll"),
-            buildDir + context.File("Cake.Common.pdb"),
-            buildDir + context.File("Cake.Common.xml"),
-            buildDir + context.File("Mono.CSharp.dll"),
-            buildDir + context.File("Autofac.dll"),
-            buildDir + context.File("NuGet.Core.dll")
+        var cakeFiles = new FilePath[] {
+            context.File("Cake.exe"),
+            context.File("Cake.pdb"),
+            context.File("Cake.Core.dll"),
+            context.File("Cake.Core.pdb"),
+            context.File("Cake.Core.xml"),
+            context.File("Cake.NuGet.dll"),
+            context.File("Cake.NuGet.pdb"),
+            context.File("Cake.NuGet.xml"),
+            context.File("Cake.Common.dll"),
+            context.File("Cake.Common.pdb"),
+            context.File("Cake.Common.xml"),
+            context.File("Mono.CSharp.dll"),
+            context.File("Autofac.dll"),
+            context.File("NuGet.Core.dll")
         };
+
+        var cakeAssemblyPaths = cakeFiles.Concat(new FilePath[] {"LICENSE"})
+            .Select(file => buildDir.Path.CombineWithFilePath(file))
+            .ToArray();
 
         var testingAssemblyPaths = new FilePath[] {
             testingDir + context.File("Cake.Testing.dll"),
@@ -65,10 +69,10 @@ public class BuildPaths
 
         var artifactSourcePaths = cakeAssemblyPaths.Concat(testingAssemblyPaths.Concat(repoFilesPaths)).ToArray();
 
-        var chocolateyFiles = cakeAssemblyPaths.Concat(new FilePath[] {"LICENSE"})
-            .Select(
-                file => new ChocolateyNuSpecContent {Source = string.Concat("./../", file.FullPath)}
-            ).ToArray();
+        var relPath = new DirectoryPath("./").MakeAbsolute(context.Environment).GetRelativePath(artifactsBinNet45.MakeAbsolute(context.Environment));
+        var chocolateyFiles = cakeFiles.Concat(new FilePath[] {"LICENSE"})
+            .Select(file => new ChocolateyNuSpecContent {Source = "../" + relPath.CombineWithFilePath(file).FullPath})
+            .ToArray();
 
         var zipArtifactPath = artifactsDir.CombineWithFilePath("Cake-bin-v" + semVersion + ".zip");
 
