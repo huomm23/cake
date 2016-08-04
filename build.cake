@@ -203,6 +203,7 @@ Task("Publish-MyGet")
     .IsDependentOn("Package")
     .WithCriteria(() => !parameters.IsLocalBuild)
     .WithCriteria(() => !parameters.IsPullRequest)
+    .WithCriteria(() => !parameters.IsCoreClrBranch)
     .WithCriteria(() => parameters.IsMainCakeRepo)
     .WithCriteria(() => parameters.IsTagged || !parameters.IsMainCakeBranch)
     .Does(() =>
