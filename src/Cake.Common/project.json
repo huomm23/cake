@@ -1,11 +1,13 @@
-{
-  "version": "1.0.0-*",
+﻿{
+  "version": "0.15.3-*",
   "dependencies": {
-    "Cake.Core": { "target": "project" },
+    "Cake.Core": {
+      "target": "project"
+    },
     "StyleCop.Analyzers": {
       "version": "1.0.0",
       "type": "build"
-      }
+    }
   },
   "buildOptions": {
     "xmlDoc": true,
@@ -24,7 +26,9 @@
   "frameworks": {
     "netstandard1.6": {
       "buildOptions": {
-        "define": [ "NETCORE" ]
+        "define": [
+          "NETCORE"
+        ]
       },
       "imports": "dnxcore50",
       "dependencies": {
@@ -38,12 +42,24 @@
     },
     "net45": {
       "frameworkAssemblies": {
-        "System.Xml": { "type": "build" },
-        "System.Net.Http": { "type": "build" },
-        "System.Runtime.Serialization": { "type": "build" },
-        "System.Runtime.Serialization.Json": { "type": "build" },
-        "System.IO.Compression": { "type": "build" },
-        "System.IO.Compression.FileSystem": { "type": "build" }
+        "System.Xml": {
+          "type": "build"
+        },
+        "System.Net.Http": {
+          "type": "build"
+        },
+        "System.Runtime.Serialization": {
+          "type": "build"
+        },
+        "System.Runtime.Serialization.Json": {
+          "type": "build"
+        },
+        "System.IO.Compression": {
+          "type": "build"
+        },
+        "System.IO.Compression.FileSystem": {
+          "type": "build"
+        }
       }
     }
   }

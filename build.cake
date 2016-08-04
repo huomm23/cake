@@ -1,5 +1,6 @@
 // Install addins.
 #addin "nuget:?package=Polly&version=4.2.0"
+#addin "nuget:?package=Newtonsoft.Json&version=9.0.1"
 
 // Install tools.
 #tool "nuget:?package=xunit.runner.console&version=2.1.0"
@@ -69,6 +70,19 @@ Setup(context =>
 Task("Clean")
     .Does(() => CleanDirectories(parameters.Paths.Directories.ToClean));
 
+Task("Patch-Project-Json")
+    .IsDependentOn("Clean")
+    .Does(() =>
+{
+    var projects = GetFiles("./src/**/project.json");
+    foreach(var project in projects)
+    {
+        if(!parameters.Version.PatchProjectJson(project)) {
+            Warning("No version specified in {0}.", project.FullPath);
+        }
+    }
+});
+
 Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
@@ -87,6 +101,7 @@ Task("Restore-NuGet-Packages")
 });
 
 Task("Build")
+    .IsDependentOn("Patch-Project-Json")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
@@ -94,6 +109,7 @@ Task("Build")
     foreach(var project in projects)
     {
         DotNetCoreBuild(project.GetDirectory().FullPath, new DotNetCoreBuildSettings {
+            VersionSuffix = parameters.Version.DotNetAsterix,
             Configuration = parameters.Configuration
         });
     }
@@ -123,8 +139,11 @@ Task("Copy-Files")
     DotNetCorePublish("./src/Cake", new DotNetCorePublishSettings
     {
         Framework = "net45",
+        VersionSuffix = parameters.Version.DotNetAsterix,
         Configuration = parameters.Configuration,
-        OutputDirectory = parameters.Paths.Directories.ArtifactsBinNet45
+        OutputDirectory = parameters.Paths.Directories.ArtifactsBinNet45,
+        NoBuild = true,
+        Verbose = false
     });
 
     // .NET Core
@@ -132,6 +151,7 @@ Task("Copy-Files")
     {
         Framework = "netcoreapp1.0",
         Configuration = parameters.Configuration,
+        VersionSuffix = parameters.Version.DotNetAsterix,
         OutputDirectory = parameters.Paths.Directories.ArtifactsBinNetCoreApp10,
         NoBuild = true,
         Verbose = false
@@ -188,6 +208,7 @@ Task("Create-NuGet-Packages")
         }
 
         DotNetCorePack(project.GetDirectory().FullPath, new DotNetCorePackSettings {
+            VersionSuffix = parameters.Version.DotNetAsterix,
             Configuration = parameters.Configuration,
             OutputDirectory = parameters.Paths.Directories.NugetRoot,
             NoBuild = true,

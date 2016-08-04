@@ -1,10 +1,10 @@
-{
-  "version": "1.0.0-*",
+﻿{
+  "version": "0.15.3-*",
   "dependencies": {
     "StyleCop.Analyzers": {
       "version": "1.0.0",
       "type": "build"
-      }
+    }
   },
   "buildOptions": {
     "xmlDoc": true,
@@ -23,7 +23,9 @@
   "frameworks": {
     "netstandard1.6": {
       "buildOptions": {
-        "define": [ "NETCORE" ],
+        "define": [
+          "NETCORE"
+        ],
         "allowUnsafe": true
       },
       "imports": "dnxcore50",
@@ -38,9 +40,15 @@
     },
     "net45": {
       "frameworkAssemblies": {
-        "System.Data": { "type": "build" },
-        "System.Xml": { "type": "build" },
-        "System.Xml.Linq": { "type": "build" }
+        "System.Data": {
+          "type": "build"
+        },
+        "System.Xml": {
+          "type": "build"
+        },
+        "System.Xml.Linq": {
+          "type": "build"
+        }
       }
     }
   }
