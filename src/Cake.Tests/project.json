@@ -1,15 +1,24 @@
-{
+﻿{
+  "version": "0.15.3-*",
   "dependencies": {
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Cake": { "target": "project" },
-    "Cake.Core": { "target": "project" },
-    "Cake.Testing": { "target": "project" },
-    "Cake.Testing.Xunit": { "target": "project" },
+    "Cake": {
+      "target": "project"
+    },
+    "Cake.Core": {
+      "target": "project"
+    },
+    "Cake.Testing": {
+      "target": "project"
+    },
+    "Cake.Testing.Xunit": {
+      "target": "project"
+    },
     "NSubstitute": "1.10.0.0",
     "StyleCop.Analyzers": {
       "version": "1.0.0",
       "type": "build"
-      }
+    }
   },
   "configurations": {
     "Release": {
@@ -34,13 +43,13 @@
   },
   "frameworks": {
     "net451": {
-      "dependencies": {
-      },
+      "dependencies": {},
       "frameworkAssemblies": {
-        "System.Runtime": { "type": "build" }
+        "System.Runtime": {
+          "type": "build"
+        }
       }
     }
   },
-
   "testRunner": "xunit"
 }
