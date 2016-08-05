@@ -74,8 +74,8 @@ public class BuildPaths
             .Select(file => new ChocolateyNuSpecContent {Source = "../" + relPath.CombineWithFilePath(file).FullPath})
             .ToArray();
 
-        var zipArtifactPathCoreClr = artifactsDir.CombineWithFilePath("Cake-coreclr-bin-v" + semVersion + ".zip");
-        var zipArtifactPathDesktop = artifactsDir.CombineWithFilePath("Cake-net45-bin-v" + semVersion + ".zip");
+        var zipArtifactPathCoreClr = artifactsDir.CombineWithFilePath("Cake-bin-coreclr-v" + semVersion + ".zip");
+        var zipArtifactPathDesktop = artifactsDir.CombineWithFilePath("Cake-bin-net45-v" + semVersion + ".zip");
 
         var buildDirectories = new BuildDirectories(
             artifactsDir,

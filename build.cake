@@ -171,8 +171,8 @@ Task("Zip-Files")
     Zip(parameters.Paths.Directories.ArtifactsBinNet45, parameters.Paths.Files.ZipArtifactPathDesktop, homebrewFiles);
 
     // .NET Core
-    var coreclrFiles = GetFiles( parameters.Paths.Directories.ArtifactsBin.FullPath + "/**/*");
-    Zip(parameters.Paths.Directories.ArtifactsBin, parameters.Paths.Files.ZipArtifactPathCoreClr, coreclrFiles);
+    var coreclrFiles = GetFiles( parameters.Paths.Directories.ArtifactsBinNetCoreApp10.FullPath + "/**/*");
+    Zip(parameters.Paths.Directories.ArtifactsBinNetCoreApp10, parameters.Paths.Files.ZipArtifactPathCoreClr, coreclrFiles);
 });
 
 Task("Create-Chocolatey-Packages")
@@ -197,6 +197,7 @@ Task("Create-NuGet-Packages")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
+    // Build libraries
     var projects = GetFiles("./**/*.xproj");
     foreach(var project in projects)
     {
@@ -215,6 +216,26 @@ Task("Create-NuGet-Packages")
             Verbose = false
         });
     }
+
+    // Cake - .NET 4.5
+    NuGetPack("./nuspec/Cake.nuspec", new NuGetPackSettings {
+        Version = parameters.Version.SemVersion,
+        ReleaseNotes = parameters.ReleaseNotes.Notes.ToArray(),
+        BasePath = parameters.Paths.Directories.ArtifactsBinNet45,
+        OutputDirectory = parameters.Paths.Directories.NugetRoot,
+        Symbols = false,
+        NoPackageAnalysis = true
+    });
+
+    // Cake - .NET Core
+    NuGetPack("./nuspec/Cake.CoreCLR.nuspec", new NuGetPackSettings {
+        Version = parameters.Version.SemVersion,
+        ReleaseNotes = parameters.ReleaseNotes.Notes.ToArray(),
+        BasePath = parameters.Paths.Directories.ArtifactsBinNetCoreApp10,
+        OutputDirectory = parameters.Paths.Directories.NugetRoot,
+        Symbols = false,
+        NoPackageAnalysis = true
+    });
 });
 
 Task("Upload-AppVeyor-Artifacts")
