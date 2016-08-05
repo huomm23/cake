@@ -1,5 +1,25 @@
 ﻿{
   "version": "0.15.3-*",
+  "description": "Provides aliases (extension methods on Cake context) that support CI, build, unit tests, zip, signing, etc. for Cake.",
+  "copyright": "Copyright (c) .NET Foundation and contributors",
+  "authors": [
+    "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors"
+  ],
+  "packOptions": {
+    "summary": "Cake (C# Make) is a build automation system with a C# DSL to do things like compiling code, copy files/folders, running unit tests, compress files and build NuGet packages.",
+    "licenseUrl": "https://github.com/cake-build/cake/blob/develop/LICENSE",
+    "iconUrl": "https://raw.githubusercontent.com/cake-build/graphics/master/png/cake-medium.png",
+    "requireLicenseAcceptance": false,
+    "tags": [
+      "Cake",
+      "Script",
+      "Build"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/cake-build/cake"
+    }
+  },
   "dependencies": {
     "Cake.Core": {
       "target": "project"
