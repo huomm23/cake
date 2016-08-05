@@ -9,6 +9,11 @@
 /[Tt]ools/
 *.sln.ide/
 
+# .NET CLI
+/.dotnet/
+dotnet-install.sh*
+/.packages/
+
 # Visual Studio
 .vs/
 .vscode/

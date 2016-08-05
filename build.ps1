@@ -49,23 +49,34 @@ if (!(Test-Path $ToolPath)) {
 # INSTALL .NET CORE CLI
 ###########################################################################
 
-# Get .NET Core CLI path if installed.
-$DotNetCliPath = $null;
-if (Get-Command dotnet -ErrorAction SilentlyContinue) {
-    $Version = dotnet --version;
-    if($Version -eq $DotNetVersion) {
-        $DotNetCliPath = (Get-Command dotnet).Path; 
-    }
+Function Remove-PathVariable([string]$VariableToRemove)
+{
+  $path = [Environment]::GetEnvironmentVariable("PATH", "User")
+  $newItems = $path.Split(';') | Where-Object { $_.ToString() -inotlike $VariableToRemove }
+  [Environment]::SetEnvironmentVariable("PATH", [System.String]::Join(';', $newItems), "User")
+  $path = [Environment]::GetEnvironmentVariable("PATH", "Process")
+  $newItems = $path.Split(';') | Where-Object { $_.ToString() -inotlike $VariableToRemove }
+  [Environment]::SetEnvironmentVariable("PATH", [System.String]::Join(';', $newItems), "Process")
 }
 
-# Install .NET Core CLI?
-if([string]::IsNullOrWhiteSpace($DotNetCliPath)) {
+# Get .NET Core CLI path if installed.
+$FoundDotNetCliVersion = $null;
+if (Get-Command dotnet -ErrorAction SilentlyContinue) {
+    $FoundDotNetCliVersion = dotnet --version;
+}
+
+if($FoundDotNetCliVersion -ne $DotNetVersion) {
+    $InstallPath = Join-Path $PSScriptRoot ".dotnet"
     if (!(Test-Path $InstallPath)) {
         mkdir -Force $InstallPath | Out-Null;
     }
     Invoke-WebRequest $DotNetInstallerUri -OutFile "$InstallPath\dotnet-install.ps1"
-    & $InstallPath\dotnet-install.ps1 -Channel $DotNetChannel -Version $DotNetVersion -InstallDir $InstallPath -NoPath;
-    $DotNetCliPath = "$InstallPath\dotnet.exe";
+    & $InstallPath\dotnet-install.ps1 -Channel $DotNetChannel -Version $DotNetVersion -InstallDir $InstallPath;
+
+    Remove-PathVariable "$InstallPath"
+    $env:PATH = "$InstallPath;$env:PATH"
+    $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+    $env:DOTNET_CLI_TELEMETRY_OPTOUT=1
 }
 
 ###########################################################################
@@ -103,7 +114,6 @@ $Arguments = @{
     configuration=$Configuration;
     verbosity=$Verbosity;
     dryrun=$WhatIf;
-    dotnet=$DotNetCliPath;
 }.GetEnumerator() | %{"--{0}=`"{1}`"" -f $_.key, $_.value };
 
 # Start Cake

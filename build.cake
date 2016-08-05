@@ -1,11 +1,10 @@
 // Install addins.
-#addin "nuget:?package=Polly&version=4.2.0"
-#addin "nuget:?package=Newtonsoft.Json&version=9.0.1"
+#addin "nuget:https://www.nuget.org/api/v2?package=Polly&version=4.2.0"
+#addin "nuget:https://www.nuget.org/api/v2?package=Newtonsoft.Json&version=9.0.1"
 
 // Install tools.
-#tool "nuget:?package=xunit.runner.console&version=2.1.0"
-#tool "nuget:?package=gitreleasemanager&version=0.5.0"
-#tool "nuget:?package=GitVersion.CommandLine&version=3.6.2"
+#tool "nuget:https://www.nuget.org/api/v2?package=gitreleasemanager&version=0.5.0"
+#tool "nuget:https://www.nuget.org/api/v2?package=GitVersion.CommandLine&version=3.6.2"
 
 // Load other scripts.
 #load "./build/parameters.cake"
@@ -68,7 +67,10 @@ Setup(context =>
 //////////////////////////////////////////////////////////////////////
 
 Task("Clean")
-    .Does(() => CleanDirectories(parameters.Paths.Directories.ToClean));
+    .Does(() => 
+{
+    CleanDirectories(parameters.Paths.Directories.ToClean);
+});
 
 Task("Patch-Project-Json")
     .IsDependentOn("Clean")
@@ -96,7 +98,7 @@ Task("Restore-NuGet-Packages")
             "https://dotnet.myget.org/F/dotnet-core/api/v3/index.json",
             "https://dotnet.myget.org/F/cli-deps/api/v3/index.json",
             "https://api.nuget.org/v3/index.json",
-        },
+        }
     });
 });
 
@@ -122,14 +124,33 @@ Task("Run-Unit-Tests")
     var projects = GetFiles("./src/**/*.Tests.xproj");
     foreach(var project in projects) 
     {
-        DotNetCoreTest(project.GetDirectory().FullPath, new DotNetCoreTestSettings {
-            Configuration = parameters.Configuration,
-            NoBuild = true,
-            Verbose = false
-        });
+        if(IsRunningOnWindows()) 
+        {
+            DotNetCoreTest(project.GetDirectory().FullPath, new DotNetCoreTestSettings {
+                Configuration = parameters.Configuration,
+                NoBuild = true,
+                Verbose = false
+            });
+        }
+        else
+        {
+            var name = project.GetFilenameWithoutExtension();
+            var dirPath = project.GetDirectory().FullPath;
+            var config = parameters.Configuration;
+            var xunit = GetFiles(dirPath + "/bin/" + config + "/net451/*/dotnet-test-xunit.exe").First().FullPath;
+            var testfile = GetFiles(dirPath + "/bin/" + config + "/net451/*/" + name + ".dll").First().FullPath;
+
+            using(var process = StartAndReturnProcess("mono", new ProcessSettings{ Arguments = xunit + " " + testfile }))
+            {
+                process.WaitForExit();
+                if (process.GetExitCode() != 0)
+                {
+                    throw new Exception("Mono tests failed!");
+                }
+            }
+        }
     }
 });
-
 
 Task("Copy-Files")
     .IsDependentOn("Run-Unit-Tests")
